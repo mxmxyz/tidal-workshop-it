@@ -1,0 +1,24 @@
+-- Tidal è composto da più parti:
+
+-- 'tidal' propriamente detto, che controlliamo tramite Atom
+-- 'SuperDirt', una classe di SuperCollider che riproduce sample
+-- il workflow standard è: scriviamo 'pattern' in Atom per controllare Tidal,
+-- che a sua volta manda messaggi a SuperDirt.
+
+-- facciamo partire SuperDirt (in SC) (occhio alle maiuscole!),
+
+SuperDirt.start
+
+-- e facoltativamente un oscilloscopio:
+
+s.scope
+
+-- proviamo a mandare qualche messaggio da Tidal, scrivendo e VALUTANDO (ctrl/cmd + enter) questa espressione:
+
+d1 (sound "bd sn")
+
+-- d1 rappresenta una "connessione" da Tidal a SuperDirt. Possiamo smettere di inviare messaggi con
+
+d1 (silence)
+
+-- in generale, valutare una nuova espressione con d1 all'inizio "rimpiazza" la precedente

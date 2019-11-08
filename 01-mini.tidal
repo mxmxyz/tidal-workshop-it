@@ -1,0 +1,47 @@
+-- riprendiamo il nostro primo esempio:
+
+d1 (sound "bd sn")
+
+-- abbiamo visto cosa vuol dire d1. tra virgolette abbiamo un PATTERN, preceduto dall'indicazione che questo pattern indica che campioni riprodurre in quali momenti.
+-- in generale, i sample che stanno tra le parentesi sono riprodotti in modo tale che complessivamente occupino un ciclo. Quindi "bd sn" divide il pattern in due parti: all'inizio del ciclo riproduciamo 'bd', a metà 'sn'.
+-- possiamo vedere meglio questo aggiungendo altri sample al pattern,
+
+d1 (sound "bd sn hh")
+
+d1 (sound "bd sn hh bd")
+
+-- e notando che progressivamente accelera (più campioni sono disposti in modo da occupare equamente lo stesso spazio).
+
+-- possiamo creare suddivisioni all'interno di un pattern, usando []:
+
+d1 (sound "[bd hh] sn")
+
+-- 'bd' e 'hh' sono disposti in maniera tale da occupare la prima metà del pattern, ovvero il primo step. Non c'è limite alla profondità delle suddivisioni:
+
+d1 (sound "[[bd sn] hh] sn")
+
+d1 (sound "[[bd [sn gabba sn]] hh] sn")
+
+-- l'asterisco è equivalente a una suddivisione con un solo campione ripetuto:
+
+d1 (sound "[bd bd bd bd] sn")
+
+d1 (sound "bd*4 sn")
+
+-- possiamo usare la tilde (~, ascii 126) come pausa:
+
+d1 (sound "bd ~ ~ bd ~ ~ bd ~")
+
+-- ritmi euclidei! questo pattern suddivide equamente 3 bd in 8 passi (quindi è equivalente al precedente):
+
+d1 (sound "bd(3,8)")
+
+d1 (sound "bd(11,32)")
+
+-- randomness: con il pipe (|) indichiamo una serie di possibili sample (in versioni recenti di Tidal...). Con il punto interrogativo (?) indichiamo un sample da suonare solo il 50% delle volte.
+
+d1 (sound "[bd|gabba|hardkick] sn? sn? sn")
+
+-- possiamo suonare più pattern contemporaneamente:
+
+d1 (sound "[bd sn, hh hh hh*3]")

@@ -45,3 +45,11 @@ d1 (sound "[bd|gabba|hardkick] sn? sn? sn")
 -- possiamo suonare più pattern contemporaneamente:
 
 d1 (sound "[bd sn, hh hh hh*3]")
+
+-- finora abbiamo parlato di 'bd', 'sn', 'hh' come se fossero sample. In realtà sono cartelle di sample!
+
+d1 (sound "bd:0 bd:1 bd:2 bd:3")
+
+-- in SuperCollider, File > Open User Support Directory > downloaded-quarks > Dirt-Samples
+
+-- qui 10/15 minuti di pausa, per lasciare che provino sample nuovi e un po' di cose, ecc

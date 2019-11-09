@@ -1,0 +1,37 @@
+-- ora che abbiamo approfondito la scrittura di un pattern, vediamo come modificarlo:
+
+d1 (fast 2 (sound "bd sn hh hh*3")
+
+d1 (fast 4 (sound "bd sn hh hh*3")
+
+d1 (slow 2 (sound "bd sn hh hh*3")
+
+-- fast accelera il pattern, mentre slow lo rallenta.
+
+-- in Tidal, ci troveremo spesso a scrivere pattern che utilizzano molte funzioni una dopo l'altra. Gestire tutte queste parentesi può essere impegnativo; perciò, usiamo una convenzione per semplificare il codice.
+
+a $ b = a (b)
+
+a (b) $ c = a b (c)
+
+a $ b $ c = a (b (c))
+
+d1 $ fast 2 $ sound "bd sn hh hh*3"
+
+-- il dollaro sostituisce le parentesi, segnalando che tutto ciò che lo segue è l'ultimo argomento della funzione che lo precede.
+
+-- anche stringando dollari, a un certo punto ci troveremo con linee abbastanza lunghe e impegnative da leggere:
+
+d1 $ every 2 (fast 3) $ iter $ jux (rev) $ slow 1.5 $ sound "[bd*4, hh*3]"
+
+-- possiamo rendere questa linea più leggibile andando a capo più o meno dove ci pare:
+
+d1
+$ every 2 (fast 3)
+$ iter
+$ jux (rev)
+$ slow (3/2)
+$ sound "[bd*4, hh*3]"
+
+-- (non si può andare a capo all'interno della mini notation!)
+-- siete anche liberi di aggiungere linee di commento con --

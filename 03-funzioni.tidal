@@ -1,0 +1,59 @@
+setcps (120/120/2)
+
+-- è possibile utilizzare un gran numero di funzioni che permettono di modificare in molti modi un pattern
+
+d1 $ fast 2 $ s "bd sn"
+
+-- fast aumenterà la velocità di esecuzione di un pattern per un dato valore
+
+d1 $ slow 2 $ s "bd sn"
+
+-- similmente slow diminuirà la velocità del pattern per un dato valore
+
+d1 $ fast 2 $ s "bd sn"
+
+d1 $ slow (1/2) $ s "bd sn"
+
+-- queste due scritture sono analoghe
+
+
+-- vediamo altre funzioni:
+
+d1 $ jux (fast 2) $ s "bd sn hh"
+
+-- in questo caso la funzione jux prende come argomento un'altra funzione al suo interno (che in questo caso è fast 2)
+-- la funzione contenuta in jux viene applicata solo al canale destro lasciando inalterato il canale sinistro
+
+d1 $ every 3 (fast 2) $ s "bd sn hh" 
+
+-- anche every prende come secondo argomento un'altra funzione e la applica al pattern ogni X cicli dove X è
+-- il primo argomento di every
+
+-- possiamo anche fare così, ma occhio alle parentesi!
+
+d1 $ every 3 (jux (fast 2)) $ s "bd sn hh"
+
+-- allo stesso modo in cui scriviamo un pattern di samples è possibile assegnare un pattern al valore di una funzione
+
+d1
+$ fast "1 2"
+$ s "[bd sn, hh*4]"
+
+-- in questo modo durante la prima metà del ciclo il pattern di samples viene riprodotto a velocità 1,
+-- nella seconda metà a velocità 2 (questo perchè il pattern occupa sempre l'intera durata del ciclo)
+
+-- se quindi avessimo 3 elementi nel pattern corrispondente al valore di fast?
+
+d1
+$ fast "1 2 0.5"
+$ s "[bd sn, hh*4]"
+
+-- semplice! il primo terzo del ciclo verebbe riprodotto a velocità 1, il secondo terzo a velocità 2 e l'ultimo terzo
+-- a velocità 0.5 (sempre perchè il pattern occupa l'intera durata del ciclo)
+
+-- in questi casi useremo spesso le parentesi uncinate <>, in modo tale da avere esattamente un valore per ciclo:
+
+d1
+$ fast "<1 2 0.5>"
+$ s "[bd sn, hh*4]"
+

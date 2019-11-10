@@ -28,7 +28,7 @@ d1 $ every 2 (fast 3) $ iter $ jux (rev) $ slow 1.5 $ sound "[bd*4, hh*3]"
 
 d1
 $ every 2 (fast 3)
-$ iter
+$ iter 4
 $ jux (rev)
 $ slow (3/2)
 $ sound "[bd*4, hh*3]"

@@ -21,4 +21,6 @@ d1 (sound "bd sn")
 
 d1 (silence)
 
--- in generale, valutare una nuova espressione con d1 all'inizio "rimpiazza" la precedente
+hush
+
+-- in generale, valutare una nuova espressione con d1 all'inizio "rimpiazza" la precedente.

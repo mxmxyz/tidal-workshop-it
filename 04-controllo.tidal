@@ -1,0 +1,45 @@
+-- Abbiamo visto come creare pattern di eventi 'sound'. Non è l'unico tipo di eventi che possiamo 'patternare': possiamo creare pattern con altri tipi di valori, e combinare pattern di tipo diverso.
+--Innanzitutto, finora abbiamo indicato che campioni usare da una cartella in questa maniera:
+
+d1 $ sound "bd:0 bd:1 bd:2 bd:3"
+
+-- possiamo però delegare la scelta dei campioni all'interno della cartella a un ALTRO pattern.
+
+d1 $ sound "bd bd bd bd" # n "0 1 2 3"
+
+-- così la cartella viene scelta da 'sound', mentre gli indici dei campioni da 'n'. Nota come 'n' non sia preceduto da un dollaro ma da un hashtag; in generale, solo il primo di questi pattern avrà un dollaro, e questo pattern avrà una funzione privilegiata. In che senso?
+-- in questo caso 'sound' e 'n' hanno la stessa *struttura*, ovvero definiscono eventi negli stessi esatti momenti. Ma cosa succede quando abbiamo delle discrepanze?
+
+d1 $ sound "bd bd bd bd" # n "0 1 2"
+
+d1 $ sound "bd bd bd bd" # n "0 1 2 3 4"
+
+-- la struttura che viene adoperata, ovvero che stabilisce in quali momenti tidal deve 'costruire' eventi, è quella del pattern 'portante', il primo a essere scritto; chiamiamo gli altri pattern *pattern di controllo*.
+-- i valori degli altri pattern sono impiegati nella costruzione di eventi solo nel momento in cui sono 'richiesti' dal pattern principale.
+
+-- non dobbiamo necessariamente usare 'sound' come pattern principale; siamo liberi di scambiare le parti:
+
+d1 $ n "0 1*2 [2 1 2] 3" # s "bd"
+
+-- (s è sinonimo di sound se usato assieme a n)
+
+-- le funzioni applicabili a pattern sono applicabili anche solamente a pattern di controllo, così:
+
+d1 
+$ n "0 1*2 [2 1 2] 3" 
+# s (slow 2 $ "bd sn")
+
+-- 'n' è un esempio di pattern che possiamo usare come pattern di controllo, ma ne abbiamo altri, perlopiù effetti:
+-- finora l'unico strumento che abbiamo avuto per lavorare in stereo è stato jux. ma possiamo usare un pattern per specificare direttamente la posizione stereo dei sample:
+
+d1
+$ sound "bd*10"
+# pan "0 0.25 0.5 0.75 1"
+
+-- speed permette di riprodurre campioni a qualsiasi velocità; valori negativi riproducono in reverse:
+
+d1
+$ sound "bd*5"
+# speed "1 -1 0.5 2 4"
+
+-- abbiamo anche: gain (volume), shape (una distorsione, valori da 0 a 1), cutoff e resonance (un filtro low-pass).

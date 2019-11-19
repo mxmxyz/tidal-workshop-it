@@ -1,0 +1,57 @@
+-- all'interno di tidal esistono dei pattern precostruiti che sono usati spesso.
+-- se vogliamo usare questi pattern, evitiamo la mini notation tra virgolette, e indichiamo direttamente il nome del pattern tra parentesi.
+-- ad esempio, abbiamo run: 'run n' è uguale a "0 1 2 3 ... n-1"
+
+d1 $ n "0 1 2 3 4 5 6 7" # sound "bd" 
+
+d1 $ n (run 8) # sound "bd" 
+
+-- un altro pattern che potremmo intuitivamente desiderare è uno che produce numeri casuali entro certi valori. Ne esiste uno che funziona così, e si chiama 'rand':
+
+d1
+$ sound "bd*8"
+# pan (rand)
+
+-- rand produce valori tra 0 e 1. Questi sono dei buoni limiti per #pan, ma se dobbiamo lavorare con qualcos'altro, potremmo voler cambiare il suo range:
+
+d1
+$ sound "bd*8"
+# speed (range 1 4 $ rand)
+
+-- a che velocità produce valori 'rand'? è una funzione *infinitamente* dettagliata, che produce un valore diverso a ogni istante.
+-- se vogliamo limitare la 'produttività' di rand, dobbiamo usare segment:
+
+d1
+$ sound "bd*8"
+# speed (segment 2 $ range 1 4 $ rand)
+
+-- questo è necessario quando vogliamo usare rand nel nostro pattern principale:
+
+d1
+$ speed (segment 8 $ range 1 4 $ rand)
+# sound "bd"
+
+d1
+$ speed (segment (slow 3 $ "8 16 12") $ range 1 4 $ rand)
+# sound "bd"
+
+-- esistono altri modi di generare pattern casuali. Choose, ad esempio:
+
+d1
+$ sound "bd*8"
+# pan (choose [0,1])
+# speed (choose [1,2,4])
+
+d1
+$ fast (segment 2 $ choose [2,3,4,8])
+$ sound "bd*4"
+# pan (choose [0,1])
+# speed (choose [1,2,4])
+
+-- abbiamo poi una serie di forme d'onda:
+
+d1
+$ sound "bd*16"
+# pan (slow 4 $ range 0 1 $ sine)
+
+-- e anche square, saw...

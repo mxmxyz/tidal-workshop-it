@@ -42,3 +42,33 @@ $ jux rev
 $ iter 8
 $ chop 16
 $ sound "cp"
+
+-- possiamo anche choppare campioni più lunghi, ovviamente. ma prima, un'avvertenza.
+-- Tidal non presta attenzione a quanto siano lunghi i campioni. questo significa che, nel riprodurli ciclicamente, campioni ritmici (eg breakbeat) si possono sovrapporre tra di loro in maniera sconveniente:
+
+d1 $ sound "break:4"
+
+-- una funzione che risolve questo problema è loopAt:
+
+d1 $ loopAt 2 $ sound "break:4"
+
+-- indipendentemente dal tempo globale, il campione è accelerato o rallentato così da occupare 2 cicli.
+-- se combiniamo loopAt con chop, otteniamo parti di campione correttamente allineate.
+
+d1 $ loopAt 2 $ chop 8 $ sound "break:4"
+
+-- jungle!
+
+d1 $ jux (rev) $ iter 4 $ loopAt 2 $ chop 8 $ sound "break:4"
+
+-- c'è anche un'altra funzione, splice, che ci permette di patternare l'ordine dei grani:
+
+d1 $ loopAt 1 $ slice 8 "1 2 4 3 6 5 7 8" $ sound "break:4"
+
+d1 $ loopAt 1 $ slice 8 "8 1 4 3*2 6 5*3 [7 6] 8" $ sound "break:4"
+
+d1 $ loopAt 1 $ slice 8 (iter 4 $ "1 2 3 4 5 6 7 8") $ sound "break:4"
+
+-- splice = loopAt 1 $ slice
+
+d1 $ splice 8 (iter 4 $ "1 2 3 4 5 6 7 8") $ sound "break:4"

@@ -4,7 +4,7 @@
 
 d1 $ sound "sax"
 
--- possiamo usare i controlli 'begin' ed 'end' per utilizzare solo una parte del campione:
+-- possiamo usare i controlli 'begin' ed 'end' per riprodurre solo una parte del campione:
 
 d1
 $ sound "sax"
@@ -22,7 +22,7 @@ $ sound "sax*4"
 
 d1 $ chop 4 $ sound "sax"
 
--- così 'sax' è diviso in quattro parti, queste però sono tagliate in maniera tale che appena ne finisce una, inizia quella immediatamente successiva. dunque a cosa ci serve?
+-- così 'sax' è diviso in quattro parti, tagliate in maniera tale che appena ne finisce una, inizia quella immediatamente successiva. dunque a cosa ci serve?
 -- be', possiamo applicare funzioni al pattern di parti:
 
 d1 $ rev $ chop 8 $ sound "sax"
@@ -34,41 +34,37 @@ $ stutWith 4 (1/4) (|* speed 1.5)
 $ chop 8
 $ sound "sax"
 
--- quando prendiamo un campione relativamente breve e lo frammentiamo in parti molto piccole, riordinare questi frammenti diventa una specie di tecnica di sintesi, nota come *sintesi granulare*.
+-- quando prendiamo un campione relativamente breve e lo frammentiamo in parti molto piccole, riordinare questi frammenti diventa una tecnica di sintesi, nota come *sintesi granulare*.
 
 d1
-$ stutWith 8 (1/16) (|* gain 0.85)
+$ stutWith 8 (1/12) (|* gain 0.98)
 $ jux rev
-$ iter 8
-$ chop 16
+$ iter 4
+$ chop 4
 $ sound "cp"
 
 -- possiamo anche choppare campioni più lunghi, ovviamente. ma prima, un'avvertenza.
--- Tidal non presta attenzione a quanto siano lunghi i campioni. questo significa che, nel riprodurli ciclicamente, campioni ritmici (eg breakbeat) si possono sovrapporre tra di loro in maniera sconveniente:
+-- Tidal non presta attenzione a quanto siano lunghi i campioni, o a quale sia il loro contenuto. questo significa che, nel riprodurli ciclicamente, campioni ritmici (eg breakbeat) possono sovrapporsi tra loro in maniera sconveniente:
 
-d1 $ sound "break:4"
+d1 $ sound "breaks152"
 
 -- una funzione che risolve questo problema è loopAt:
 
-d1 $ loopAt 2 $ sound "break:4"
+d1 $ loopAt 2 $ sound "breaks152"
 
 -- indipendentemente dal tempo globale, il campione è accelerato o rallentato così da occupare 2 cicli.
 -- se combiniamo loopAt con chop, otteniamo parti di campione correttamente allineate.
 
-d1 $ loopAt 2 $ chop 8 $ sound "break:4"
+d1 $ loopAt 2 $ chop 8 $ sound "breaks152"
 
 -- jungle!
 
-d1 $ jux (rev) $ iter 4 $ loopAt 2 $ chop 8 $ sound "break:4"
+d1 $ jux (rev) $ iter 4 $ loopAt 2 $ chop 8 $ sound "breaks152"
 
--- c'è anche un'altra funzione, splice, che ci permette di patternare l'ordine dei grani:
+-- c'è anche un'altra funzione, splice, che permette di patternare l'ordine dei grani:
 
-d1 $ loopAt 1 $ slice 8 "1 2 4 3 6 5 7 8" $ sound "break:4"
+d1 $ loopAt 2 $ slice 8 "1 2 4 3 6 5 7 8" $ sound "breaks152"
 
-d1 $ loopAt 1 $ slice 8 "8 1 4 3*2 6 5*3 [7 6] 8" $ sound "break:4"
+d1 $ loopAt 2 $ slice 8 "8 1 4 3*2 6 5*3 [7 6] 8" $ sound "breaks152"
 
-d1 $ loopAt 1 $ slice 8 (iter 4 $ "1 2 3 4 5 6 7 8") $ sound "break:4"
-
--- splice = loopAt 1 $ slice
-
-d1 $ splice 8 (iter 4 $ "1 2 3 4 5 6 7 8") $ sound "break:4"
+d1 $ loopAt 2 $ slice 8 (iter 4 $ "1 2 3 4 5 6 7 8") $ sound "breaks152"

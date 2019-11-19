@@ -22,7 +22,7 @@ d1 $ fast 2 $ sound "bd sn hh hh*3"
 
 -- anche stringando dollari, a un certo punto ci troveremo con linee abbastanza lunghe e impegnative da leggere:
 
-d1 $ every 2 (fast 3) $ iter $ jux (rev) $ slow 1.5 $ sound "[bd*4, hh*3]"
+d1 $ every 2 (fast 3) $ iter 4 $ jux (rev) $ slow 1.5 $ sound "[bd*4, hh*3]"
 
 -- possiamo rendere questa linea più leggibile andando a capo più o meno dove ci pare:
 

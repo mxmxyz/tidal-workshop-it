@@ -10,11 +10,11 @@ d1 $ slow 2 $ s "bd sn"
 
 -- similmente slow diminuirà la velocità del pattern per un dato valore
 
+-- queste due scritture sono analoghe
+
 d1 $ fast 2 $ s "bd sn"
 
 d1 $ slow (1/2) $ s "bd sn"
-
--- queste due scritture sono analoghe
 
 
 -- vediamo altre funzioni:
@@ -32,6 +32,10 @@ d1 $ every 3 (fast 2) $ s "bd sn hh"
 -- possiamo anche fare così, ma occhio alle parentesi!
 
 d1 $ every 3 (jux (fast 2)) $ s "bd sn hh"
+
+-- questa scrittura può essere semplificata utilizzando il $ al posto delle () come abbiamo già visto prima
+
+d1 $ every 3 (jux $ fast 2) $ s "bd sn hh"
 
 -- allo stesso modo in cui scriviamo un pattern di samples è possibile assegnare un pattern al valore di una funzione
 

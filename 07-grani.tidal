@@ -1,0 +1,44 @@
+-- finora abbiamo lavorato con pattern di campioni. ma se dividiamo questi campioni in parti, possiamo lavorare con pattern di parti.
+
+-- prendiamo un sample abbastanza lungo:
+
+d1 $ sound "sax"
+
+-- possiamo usare i controlli 'begin' ed 'end' per utilizzare solo una parte del campione:
+
+d1
+$ sound "sax"
+# begin 0.1
+# end 0.2
+
+-- e se volessimo fare questo?
+
+d1
+$ sound "sax*4"
+# begin "0 0.25 0.5 0.75"
+# end "0.25 0.5 0.75 1"
+
+-- c'è una funzione che realizza esattamente questo, di nome chop:
+
+d1 $ chop 4 $ sound "sax"
+
+-- così 'sax' è diviso in quattro parti, queste però sono tagliate in maniera tale che appena ne finisce una, inizia quella immediatamente successiva. dunque a cosa ci serve?
+-- be', possiamo applicare funzioni al pattern di parti:
+
+d1 $ rev $ chop 8 $ sound "sax"
+
+d1 $ iter 4 $ chop 8 $ sound "sax"
+
+d1
+$ stutWith 4 (1/4) (|* speed 1.5)
+$ chop 8
+$ sound "sax"
+
+-- quando prendiamo un campione relativamente breve e lo frammentiamo in parti molto piccole, riordinare questi frammenti diventa una specie di tecnica di sintesi, nota come *sintesi granulare*.
+
+d1
+$ stutWith 8 (1/16) (|* gain 0.85)
+$ jux rev
+$ iter 8
+$ chop 16
+$ sound "cp"

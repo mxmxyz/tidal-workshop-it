@@ -1,0 +1,85 @@
+-- Ancora funzioni!
+
+-- Finora abbiamo lavorato con un solo pattern alla volta. Come possiamo averne di più allo stesso momento? Usiamo stack:
+
+d1 $ stack [sound "bd sn", sound "cp*3", sound "hh*8"]
+
+d1 
+$ stack 
+[sound "bd sn",
+sound "cp*3", 
+sound "hh*8"]
+
+-- stack prende come argomento una lista di pattern, e li combina così da ottenere un solo pattern che è la "somma" di tutta la lista.
+-- possiamo applicare funzioni all'intera stack o ai singoli pattern che ne fanno parte:
+
+d1 
+$ every 3 (iter 4)
+$ stack 
+[fast 2 $ sound "bd sn",
+slow "<1 2>" $ sound "cp*3", 
+sound "hh*8" # speed 2]
+
+-- se invece di avere i pattern tutti assieme vogliamo alternare tra di essi, possiamo usare cat (o randcat, la versione randomizzata):
+
+d1 
+$ cat 
+[fast 2 $ sound "bd sn",
+slow "<1 2>" $ sound "cp*3", 
+sound "hh*8" # speed 2]
+
+d1 
+$ randcat 
+[fast 2 $ sound "bd sn",
+slow "<1 2>" $ sound "cp*3", 
+sound "hh*8" # speed 2]
+
+
+-- vediamo altri modi di moltiplicare i suoni disponibili:
+
+-- superimpose aggiunge un'altra versione di un pattern sopra al pattern stesso, con applicata una funzione:
+
+d1
+$ superimpose (fast 2)
+$ sound "bd sn hh hh"
+
+d1
+$ superimpose (# speed 2)
+$ sound "bd sn hh hh"
+
+
+-- una funzione più complicata è stutWith. vediamone un uso semplice:
+
+d1
+$ stutWith 4 (1/8) id
+$ sound "bd sn"
+
+-- usato così, stutWith è una sorta di delay. Il primo argomento indica il numero di ripetizioni (3, oltre all'evento originario); il secondo indica quanto tempo dista ogni ripetizione dalla precedente (un ottavo di ciclo); il terzo indica una funzione da applicare a ogni ripetizione (in questo caso abbiamo scelto la funzione identità, che non ha nessun effetto).
+-- un paio di cose da notare:
+-- il primo argomento è patternabile (possiamo variare ciclicamente tra varie quantità di ripetizioni)
+-- il secondo argomento può anche essere 0 (il che permette di creare dei 'cluster' di suoni), o anche essere negativo (il che permette a Tidal di leggere nel futuro)
+
+d1
+$ stutWith 4 (1/8) (|* speed 1.5)
+$ sound "bd sn"
+
+-- qui abbiamo *moltiplicato* la speed dei campioni per 1.5 a ogni ripetizione. Abbiamo a disposizione altri operatori come questo, ad esempio |+ e |- . 
+-- qui usiamo un tempo di delay nullo e saliamo di un'ottava a ogni ripetizione, così da avere uno stack di note:
+
+d1
+$ stutWith 4 0 (|+ note 12)
+$ sound "arpy"
+
+-- arpeggiate prende tutti gli eventi che hanno luogo nello stesso momento e li distribuisce equamente nel tempo.
+-- partendo da:
+
+d1
+$ stutWith "<4 8 12>" 0 (|+ note 7)
+$ sound "arpy*2"
+
+-- compito per i prossimi 5 minuti: capire perché questo pattern funziona così
+
+d1
+$ arpeggiate
+$ stutWith "<4 8 12>" 0 (|+ note 7)
+$ sound "arpy*2"

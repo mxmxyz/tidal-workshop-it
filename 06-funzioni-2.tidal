@@ -83,3 +83,15 @@ d1
 $ arpeggiate
 $ stutWith "<4 8 12>" 0 (|+ note 7)
 $ sound "arpy*2"
+
+-- ovviamente non siamo limitati a utilizzare parametri di controllo come funzione! qualunque altra cosa va bene:
+
+d1
+$ stutWith 4 0 (fast (slow 3 $ "2 1.5"))
+$ sound "bd sn"
+
+-- qui ci sono quattro versioni del pattern, ognuna delle quali è veloce (slow 3 $ "2 1.5") volte la precedente.
+
+d1
+$ stutWith 4 0 (fast (slow 8 $ range 1 2 $ sine))
+$ sound "bd sn"

@@ -40,7 +40,7 @@ d1
 $ stutWith 8 (1/12) (|* gain 0.98)
 $ jux rev
 $ iter 4
-$ chop 4
+$ chop 40
 $ sound "cp"
 
 -- possiamo anche choppare campioni più lunghi, ovviamente. ma prima, un'avvertenza.

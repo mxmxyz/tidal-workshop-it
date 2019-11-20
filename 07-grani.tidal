@@ -43,6 +43,15 @@ $ iter 4
 $ chop 40
 $ sound "cp"
 
+-- creazione di un suono tessiturale mediante l'utilizzo della sintesi granulare con chop
+
+d1
+$ slow 8
+$ jux (rev)
+$ chop 3000
+$ s "sax"
+# room 1
+
 -- possiamo anche choppare campioni più lunghi, ovviamente. ma prima, un'avvertenza.
 -- Tidal non presta attenzione a quanto siano lunghi i campioni, o a quale sia il loro contenuto. questo significa che, nel riprodurli ciclicamente, campioni ritmici (eg breakbeat) possono sovrapporsi tra loro in maniera sconveniente:
 

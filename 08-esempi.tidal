@@ -1,0 +1,32 @@
+
+-- un po' di esempi che mettono in pratica le cose che abbiamo imparato fino ad ora
+
+-- lettura randomica di samples all'interno di una cartella
+-- la funzione legato interrompe la riproduzione del sample accorciandone la durata
+
+d1
+$ s "hh*8 ~"
+# n (irand 8)
+# legato 0.2
+
+-- raggruppiamo in uno stack e iniziamo ad aggiungere altre linee
+-- ricordiamo che la sintassi bd(3,8) indica un pattern euclideo e il ? dimezza la probabilità di esecuzione dell'elemento del pattern
+
+d1
+$ stack [
+s "hh*8 ~" # n (irand 8) # legato 0.2
+, s "~ bd(7,8)?"
+, s "~ sn:01"
+]
+
+-- in questo caso mettiamo il simbolo , all'inizio di ogni riga per semplificare la scrittura e il debugging
+
+-- ora possiamo applicare effetti sia su ogni singolo canale dello stack che sulla somma
+
+d1
+$ jux (rev)
+$ stack [
+s "hh*8 ~" # n (irand 8) # legato 0.2
+, s "~ bd(7,8)?"
+, every 4 (stutWith 8 (1/16) (* speed 1.1).(* gain 0.8)) $ s "~ sn:01"
+]

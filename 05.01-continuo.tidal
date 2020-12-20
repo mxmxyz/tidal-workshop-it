@@ -25,6 +25,8 @@ d1
 $ sound "bd*8"
 # speed (segment 2 $ range 1 4 $ rand)
 
+-- segment discretizza un pattern continuo campionandolo n volte per ciclo, dove n è il suo argomento
+-- per esempio segment 2 $ sine campionerà 2 valori al ciclo dal pattern sinusoidale che altrimenti ne produrebbe infiniti per ciclo
 -- questo è necessario quando vogliamo usare rand nel nostro pattern principale:
 
 d1
